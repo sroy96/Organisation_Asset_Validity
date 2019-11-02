@@ -5,11 +5,12 @@ import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Service
 public class ValidityPipelineService {
-static  boolean result=true;
-    public boolean decision(String status, String enddate, String extendedDate)  {
+  boolean result=true;
+    public boolean decision(String status, String enddate, String extendedDate) throws ParseException {
 
         if(status.equals("Approved")){
             result=true;
@@ -18,19 +19,27 @@ static  boolean result=true;
             result=false;
         }
         else if(status.equals("Pending")){
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
-            String today= LocalDate.now().toString();
+            System.out.print("Pending");
+            SimpleDateFormat formatter = new SimpleDateFormat("mm/dd/yyyy");
+            Date today= new Date();
             try{
-                if((dateFormat.parse(today).after(dateFormat.parse(enddate)))){
+                Date EndDate= formatter.parse(enddate);
+                System.out.println("len"+extendedDate.length());
+                if(today.compareTo(EndDate)>0){
                     result=true;
                 }
-                else{
-                    if((dateFormat.parse(today).after(dateFormat.parse(extendedDate)))){
+                else if(extendedDate.length()>0){
+                    Date Extended_Date= formatter.parse(extendedDate);
+                    System.out.print("Extended Date:"+Extended_Date);
+                    if(today.compareTo(Extended_Date)>0){
                         result=false;
                     }
                     else{
                         result=true;
                     }
+                }
+                else{
+                    result=false;
                 }
             }
             catch(ParseException e){

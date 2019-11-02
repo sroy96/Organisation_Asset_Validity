@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -30,7 +31,7 @@ public class AppController {
     @Autowired
     ValidityPipelineService validityPipelineService;
     @GetMapping("/{RequestedForEmail}")
-    public ResponseEntity<LaptopRequest> data(@PathVariable("RequestedForEmail") String RequestedForEmail) throws JsonProcessingException {
+    public ResponseEntity<LaptopRequest> data(@PathVariable("RequestedForEmail") String RequestedForEmail) throws JsonProcessingException, ParseException {
         List<List<String>> res=appService.result(RequestedForEmail);
         LaptopRequest laptopRequest = new LaptopRequest();
         List<String> v = res.get(0);
