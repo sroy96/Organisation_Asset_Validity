@@ -44,7 +44,7 @@ let dataapi;
               .then(res => res.json())
               .then((out) => {
                 console.log('Output: ', out);
-                if(out === null) {
+                if(out.name === undefined) {
                   swal({
                     type: 'error',
                     title: 'Oops...',
@@ -58,7 +58,7 @@ let dataapi;
                   console.log(out.result);
                   console.log(out.name);
                   if (result === true) {
-                    swal(name, ", Good to Go", "success");
+                    swal(name, " Good to Go", "success");
                   } else if (result === false) {
                     swal({
                       type: 'error',
@@ -67,6 +67,8 @@ let dataapi;
 
                     })
                   }
+
+
                 }
               }).catch(err => console.error(err)
       );
